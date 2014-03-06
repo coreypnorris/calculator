@@ -1,5 +1,5 @@
 require('rspec')
-require('calculate')
+require('calculator')
 
 describe('calculate') do
   it('calculates 5 plus 3') do

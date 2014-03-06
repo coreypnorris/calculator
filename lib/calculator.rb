@@ -1,23 +1,53 @@
 def calculate(input)
+  # ['What', 'is', '5', 'minus', '3?']
+  input = input.downcase
   input = input.gsub(/([\?|!|.])/, '')
   input = input.split(' ')
 
-  math_words = []
+  numbers = []
+  operators = []
   
   addition = /(add|addition|plus|\+|sum)/
-  numbers = /([0-9]+)/  
+  subtraction = /(minus|subtract|subtracted|\-|difference)/
+  integers = /([0-9]+)/  
   
-  result = 0
-  pos = 0
+  result = ''
 
+  # ['What', 'is', '5', 'minus', '3']
+  #=> ['5', '3']
   input.each do |word|
-    if (word.match(numbers) || word.match(addition))
-      math_words << word
+    if (word.match(integers))
+      numbers << word
     end
   end
 
-  math_words
+  # ['What', 'is', '5', 'minus', '3']
+  #=> ['minus']
+  input.each do |word|
+    if (word.match(addition))
+      operators << "+"
+    elsif (word.match(subtraction))
+      operators << "-"
+    end
+  end
+
+  operators_counter = 0
+  numbers.each_index do |index|
+    result += numbers[index]
+    
+    if (operators_counter < operators.length)
+      result += operators[index]
+    end
+    
+    operators_counter = operators_counter + 1
+  end
+
+puts "operators #{operators}"
+puts "numbers #{numbers}"
+puts eval(result)
 end
 
-print calculate("What is 5 plus 3?")
-# What is 5 plus 3?
+calculate("Sum of 5 and 3 minus 2?")
+
+
+# What is 5 minus 3?
