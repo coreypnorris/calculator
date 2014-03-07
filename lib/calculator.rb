@@ -1,14 +1,19 @@
 def calculate(input)
   # ['What', 'is', '5', 'minus', '3?']
+  #=> ['What', 'is', '5', 'minus', '3']
   input = input.downcase
   input = input.gsub(/([\?|!|.])/, '')
   input = input.split(' ')
 
   numbers = []
   operators = []
+  operators_counter = 0
   
   addition = /(add|addition|plus|\+|sum)/
   subtraction = /(minus|subtract|subtracted|\-|difference)/
+  multiplication = /(times|multiplied|\*)/
+  division = /(divided|\/)/
+  exponents = /(power|exponent)/
   integers = /([0-9]+)/  
   
   result = ''
@@ -22,16 +27,23 @@ def calculate(input)
   end
 
   # ['What', 'is', '5', 'minus', '3']
-  #=> ['minus']
+  #=> ['-', '']
   input.each do |word|
     if (word.match(addition))
       operators << "+"
     elsif (word.match(subtraction))
       operators << "-"
+    elsif (word.match(multiplication))
+      operators << "*"
+    elsif (word.match(division))
+      operators << "/"
+    elsif (word.match(exponents))
+      operators << "**"
     end
   end
 
-  operators_counter = 0
+  # ['What', 'is', '5', '-', '3']
+  #=> "5 - 3"
   numbers.each_index do |index|
     result += numbers[index]
     
@@ -39,15 +51,11 @@ def calculate(input)
       result += operators[index]
     end
     
-    operators_counter = operators_counter + 1
+    operators_counter += 1
   end
-
-puts "operators #{operators}"
-puts "numbers #{numbers}"
-puts eval(result)
+  eval(result).to_i
 end
 
-calculate("Sum of 5 and 3 minus 2?")
-
-
-# What is 5 minus 3?
+# 2 to the power of 5?
+#=> 32
+calculate("5 plus 3")
