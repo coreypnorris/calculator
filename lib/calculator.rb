@@ -8,14 +8,14 @@ def calculate(input)
   numbers = []
   operators = []
   operators_counter = 0
-  
+
   addition = /(add|addition|plus|\+|sum)/
   subtraction = /(minus|subtract|subtracted|\-|difference)/
   multiplication = /(times|multiplied|\*)/
   division = /(divided|\/)/
   exponents = /(power|exponent)/
-  integers = /([0-9]+)/  
-  
+  integers = /([0-9]+)/
+
   result = ''
 
   # ['What', 'is', '5', 'minus', '3']
@@ -46,16 +46,12 @@ def calculate(input)
   #=> "5 - 3"
   numbers.each_index do |index|
     result += numbers[index]
-    
+
     if (operators_counter < operators.length)
       result += operators[index]
     end
-    
+
     operators_counter += 1
   end
   eval(result).to_i
 end
-
-# 2 to the power of 5?
-#=> 32
-calculate("5 plus 3")
